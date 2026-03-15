@@ -1,43 +1,61 @@
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
+.show-number {
+  text-align: right;
+  color: #01d167;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.card {
-  position: relative;
-  text-align: left;
-  border: 1px solid #d0d5dd;
-  border-radius: 10px;
-  padding: 14px;
-  background: #ffffff;
-}
-
-.card--selected {
-  border-color: #087443;
-  box-shadow: 0 0 0 2px rgba(8, 116, 67, 0.2);
-}
-
-.card--frozen {
-  opacity: 0.6;
-}
-
-.card__overlay {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #475467;
+.hero-card {
+  background: #01d167;
   color: #fff;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 12px;
+  border-radius: 14px;
+  padding: 28px 30px;
+  min-height: 260px;
+  box-shadow: 0 20px 24px rgba(0, 0, 0, 0.08);
 }
+.hero-card--frozen {
+  background: linear-gradient(160deg, #2ea46c, #1d905a);
+}
+.hero-card__brand { text-align: right; font-size: 2rem; font-weight: 700; }
+.hero-card h2 { font-size: 2.6rem; margin: 22px 0; }
+.hero-card__number { font-size: 2rem; letter-spacing: 3px; margin: 0; }
+.hero-card__meta { display: flex; gap: 26px; font-size: 1.7rem; font-weight: 700; margin-top: 22px; }
+.hero-card__visa { text-align: right; font-style: italic; font-weight: 800; font-size: 3rem; }
 
-.card-actions {
-  margin-top: 16px;
+.carousel-dots {
+  margin-top: 18px;
   display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.dot {
+  border: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: #b9d7cb;
+}
+.dot.active { width: 26px; background: #01d167; }
+
+.actions-bar {
+  background: #edf3ff;
+  border-radius: 14px;
+  margin-top: 24px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
 }
+.action-btn {
+  border: 0;
+  background: none;
+  color: #0c365a;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  font-size: 0.95rem;
+}
+.action-btn span { max-width: 74px; }
 
 .modal-backdrop {
   position: fixed;
@@ -45,19 +63,35 @@
   background: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
+  z-index: 20;
 }
-
 .modal {
   background: #fff;
-  padding: 20px;
   border-radius: 10px;
+  padding: 20px;
   min-width: 320px;
   display: grid;
   gap: 10px;
 }
+.modal input { border: 1px solid #d4dae3; border-radius: 6px; padding: 8px; }
+.modal__actions { display: flex; justify-content: flex-end; gap: 8px; }
 
-.modal__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+@media (max-width: 840px) {
+  .show-number {
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    width: fit-content;
+    margin: 0 0 -2px auto;
+    padding: 8px 14px;
+    font-size: 1.2rem;
+  }
+  .hero-card { padding: 18px 20px; min-height: 220px; }
+  .hero-card__brand { font-size: 1.7rem; }
+  .hero-card h2 { font-size: 2.2rem; }
+  .hero-card__number { font-size: 1.7rem; }
+  .hero-card__meta { font-size: 1.5rem; }
+  .actions-bar {
+    margin-top: 20px;
+    border-radius: 24px 24px 0 0;
+  }
 }
