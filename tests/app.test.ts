@@ -80,6 +80,20 @@ describe('createApp', () => {
     expect(document.body.textContent).toContain('Exp 02/27');
   });
 
+
+  it('selecting a card updates the active hero card', () => {
+    const storage = new StorageMock();
+    const root = document.querySelector<HTMLElement>('#app');
+
+    createApp(root!, storage);
+
+    const secondCardButton = document.querySelectorAll<HTMLButtonElement>('.card-info')[1];
+    secondCardButton?.click();
+
+    const activeCard = document.querySelector<HTMLElement>('[data-testid="active-card"]');
+    expect(activeCard?.textContent).toContain(PRELOADED_CARDS[1].holderName);
+  });
+
   it('freeze/unfreeze toggles card state and UI label', () => {
     const storage = new StorageMock();
     const root = document.querySelector<HTMLElement>('#app');
