@@ -4,6 +4,9 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   {
+    ignores: ['dist/**', 'node_modules/**']
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       parser: tsParser,
@@ -18,7 +21,7 @@ export default [
       ...tseslint.configs['recommended-type-checked'].rules,
       ...tseslint.configs['stylistic-type-checked'].rules,
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }]
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
     }
   },
   eslintConfigPrettier
