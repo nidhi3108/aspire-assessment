@@ -139,7 +139,8 @@ export const createApp = (root: HTMLElement, storage: Storage): App => {
       number.textContent = card.cardNumber;
       const expiry = document.createElement('p');
       expiry.textContent = `Exp ${card.expiry}`;
-      infoButton.append(holderName, number, expiry);
+      info.append(holderName, number, expiry);
+      infoButton.append(info);
 
       infoButton.addEventListener('click', () => {
         activeCardId = card.id;

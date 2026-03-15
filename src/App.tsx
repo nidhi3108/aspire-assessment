@@ -1,20 +1,12 @@
+import { CardCarousel } from './components/CardCarousel';
+import { useCards } from './hooks/useCards';
+import './styles/global.css';
+
 const navigationItems = ['Home', 'Cards', 'Payments', 'Credit', 'Settings'];
 
-const actionItems = [
-  { label: 'Freeze card', icon: '❄️' },
-  { label: 'Set spend limit', icon: '💸' },
-  { label: 'Add to GPay', icon: '📱' },
-  { label: 'Replace card', icon: '🔁' },
-  { label: 'Cancel card', icon: '🚫' },
-];
-
-const transactions = [
-  { merchant: 'Hamleys', category: 'Refund on debit card', amount: '+ S$ 150', when: 'Today' },
-  { merchant: 'Hamleys', category: 'Charged to debit card', amount: '- S$ 150', when: 'Yesterday' },
-  { merchant: 'Hamleys', category: 'Charged to debit card', amount: '- S$ 150', when: '20 May 2024' },
-];
-
 function App() {
+  const { cards, selectedCard, selectedCardId, selectCard } = useCards();
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -35,10 +27,7 @@ function App() {
             <p>Available balance</p>
             <div className="balance-row">
               <span className="currency-pill">S$</span>
-              <h2>3,000</h2>
-              <button type="button" className="new-card-btn">
-                + New card
-              </button>
+              <h2>{(cards.length * 3000).toLocaleString()}</h2>
             </div>
           </header>
 
@@ -48,49 +37,65 @@ function App() {
           </div>
 
           <section className="card-panel">
-            <article className="debit-card">
-              <p className="card-name">Mark Henry</p>
-              <p className="card-number">••••  ••••  ••••  2020</p>
-              <div className="card-meta">
-                <span>Thru: 12/20</span>
-                <span>CVV: ***</span>
-              </div>
-              <p className="visa">VISA</p>
-            </article>
-            <div className="carousel-dots">
-              <span className="dot active" />
-              <span className="dot" />
-              <span className="dot" />
-            </div>
-          </section>
-
-          <section className="actions-bar">
-            {actionItems.map((item) => (
-              <button key={item.label} type="button" className="action-btn">
-                <span>{item.icon}</span>
-                {item.label}
-              </button>
-            ))}
+            <CardCarousel />
           </section>
         </section>
 
         <aside className="details-panel">
           <section className="panel card-details">
             <h3>Card details</h3>
-            <p>View card number, CVV and billing address.</p>
+            {selectedCard ? (
+              <div>
+                <p><strong>{selectedCard.cardName}</strong></p>
+                <p className="card-number-display">{selectedCard.cardNumber}</p>
+                <p>Exp: {selectedCard.expirationDate}</p>
+                <p>
+                  Status:{' '}
+                  <span className={selectedCard.status === 'frozen' ? 'amount' : 'amount positive'}>
+                    {selectedCard.status}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <p>Select a card to view details.</p>
+            )}
           </section>
 
           <section className="panel recent-transactions">
             <h3>Recent transactions</h3>
-            <ul>
-              {transactions.map((transaction) => (
-                <li key={`${transaction.merchant}-${transaction.when}`}>
-                  <div>
-                    <strong>{transaction.merchant}</strong>
-                    <p>{transaction.category}</p>
-                    <small>{transaction.when}</small>
-                  </div>
-                  <span className={transaction.amount.startsWith('+') ? 'amount positive' : 'amount'}>{transaction.amount}</span>
+            {selectedCard && selectedCard.transactions.length > 0 ? (
+              <ul>
+                {selectedCard.transactions.map((tx) => (
+                  <li key={tx.id}>
+                    <div>
+                      <strong>{tx.merchant}</strong>
+                      <p>{tx.description}</p>
+                      <small>{new Date(tx.occurredAt).toLocaleDateString()}</small>
+                    </div>
+                    <span className={tx.amount >= 0 ? 'amount positive' : 'amount'}>
+                      {tx.amount >= 0 ? '+ ' : '- '}S$ {Math.abs(tx.amount).toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No transactions for this card.</p>
+            )}
+          </section>
+
+          <section className="panel cards-summary">
+            <h3>All cards ({cards.length})</h3>
+            <ul className="cards-summary-list">
+              {cards.map((card) => (
+                <li
+                  key={card.id}
+                  className={`cards-summary-item ${card.id === selectedCardId ? 'cards-summary-item--active' : ''}`}
+                  onClick={() => selectCard(card.id)}
+                >
+                  <span>{card.cardName}</span>
+                  <span className={card.status === 'frozen' ? 'amount' : 'amount positive'}>
+                    {card.status}
+                  </span>
                 </li>
               ))}
             </ul>
