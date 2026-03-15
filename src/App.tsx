@@ -4,14 +4,19 @@ import './styles/global.css';
 
 const navigationItems = ['Home', 'Cards', 'Payments', 'Credit', 'Settings'];
 
+const mobileNavigationItems = ['Home', 'Cards', 'Payments', 'Credit', 'Profile'];
+
 function App() {
-  const { cards, selectedCard, selectedCardId, selectCard } = useCards();
+  const cardsState = useCards();
+  const { cards, selectedCard } = cardsState;
+
+  const transactions = selectedCard?.transactions ?? [];
 
   return (
     <div className="app-shell">
       <aside className="sidebar">
-        <h1 className="brand">Aspire</h1>
-        <p className="tagline">Trusted way of banking for 3,000+ SMEs and startups in Singapore.</p>
+        <h1 className="brand">aspire</h1>
+        <p className="tagline">Trusted way of banking for 3,000+ SMEs and startups in Singapore</p>
         <nav className="nav-menu">
           {navigationItems.map((item) => (
             <button key={item} className={`nav-item ${item === 'Cards' ? 'active' : ''}`}>
@@ -24,11 +29,14 @@ function App() {
       <main className="content-layout">
         <section className="card-workspace">
           <header className="balance-header">
-            <p>Available balance</p>
-            <div className="balance-row">
-              <span className="currency-pill">S$</span>
-              <h2>{(cards.length * 3000).toLocaleString()}</h2>
+            <div>
+              <p>{window.innerWidth < 840 ? 'Account balance' : 'Available balance'}</p>
+              <div className="balance-row">
+                <span className="currency-pill">S$</span>
+                <h2>{(cards.length * 3000).toLocaleString()}</h2>
+              </div>
             </div>
+            <button className="new-card-btn" type="button" onClick={cardsState.openAddCardModal}>+ New card</button>
           </header>
 
           <div className="tabs">
@@ -37,43 +45,28 @@ function App() {
           </div>
 
           <section className="card-panel">
-            <CardCarousel />
+            <CardCarousel {...cardsState} />
           </section>
         </section>
 
         <aside className="details-panel">
-          <section className="panel card-details">
+          <section className="panel section-title">
             <h3>Card details</h3>
-            {selectedCard ? (
-              <div>
-                <p><strong>{selectedCard.cardName}</strong></p>
-                <p className="card-number-display">{selectedCard.cardNumber}</p>
-                <p>Exp: {selectedCard.expirationDate}</p>
-                <p>
-                  Status:{' '}
-                  <span className={selectedCard.status === 'frozen' ? 'amount' : 'amount positive'}>
-                    {selectedCard.status}
-                  </span>
-                </p>
-              </div>
-            ) : (
-              <p>Select a card to view details.</p>
-            )}
           </section>
 
           <section className="panel recent-transactions">
             <h3>Recent transactions</h3>
-            {selectedCard && selectedCard.transactions.length > 0 ? (
+            {transactions.length > 0 ? (
               <ul>
-                {selectedCard.transactions.map((tx) => (
+                {transactions.map((tx) => (
                   <li key={tx.id}>
-                    <div>
+                    <div className="tx-left">
                       <strong>{tx.merchant}</strong>
+                      <small>{new Date(tx.occurredAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</small>
                       <p>{tx.description}</p>
-                      <small>{new Date(tx.occurredAt).toLocaleDateString()}</small>
                     </div>
                     <span className={tx.amount >= 0 ? 'amount positive' : 'amount'}>
-                      {tx.amount >= 0 ? '+ ' : '- '}S$ {Math.abs(tx.amount).toLocaleString()}
+                      {tx.amount >= 0 ? '+' : '-'} S$ {Math.abs(tx.amount)}
                     </span>
                   </li>
                 ))}
@@ -82,26 +75,16 @@ function App() {
               <p>No transactions for this card.</p>
             )}
           </section>
-
-          <section className="panel cards-summary">
-            <h3>All cards ({cards.length})</h3>
-            <ul className="cards-summary-list">
-              {cards.map((card) => (
-                <li
-                  key={card.id}
-                  className={`cards-summary-item ${card.id === selectedCardId ? 'cards-summary-item--active' : ''}`}
-                  onClick={() => selectCard(card.id)}
-                >
-                  <span>{card.cardName}</span>
-                  <span className={card.status === 'frozen' ? 'amount' : 'amount positive'}>
-                    {card.status}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
         </aside>
       </main>
+
+      <nav className="mobile-bottom-nav">
+        {mobileNavigationItems.map((item) => (
+          <button key={item} className={`mobile-nav-item ${item === 'Cards' ? 'active' : ''}`}>
+            {item}
+          </button>
+        ))}
+      </nav>
     </div>
   );
 }
