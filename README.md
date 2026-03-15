@@ -1,4 +1,3 @@
-# aspire-assessment
 
 Aspire-inspired TypeScript web app showcasing card-management interactions for the frontend challenge.
 

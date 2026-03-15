@@ -131,6 +131,7 @@ export const createApp = (root: HTMLElement, storage: Storage): App => {
       infoButton.className = 'card-info';
       infoButton.setAttribute('aria-label', `Select ${card.holderName} card`);
 
+      const info = document.createElement('div');
       const holderName = document.createElement('p');
       holderName.className = 'card-name';
       holderName.textContent = card.holderName;
