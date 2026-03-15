@@ -1,0 +1,180 @@
+:root {
+  color: #0c365a;
+  background: #f5f9ff;
+  font-family: Inter, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #0c365a;
+  color: #fff;
+  padding: 44px 32px;
+}
+
+.subtitle {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.balance {
+  margin: 10px 0 24px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.primary-btn {
+  border: 0;
+  border-radius: 8px;
+  background: #325baf;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 16px;
+}
+
+.content {
+  padding: 48px;
+}
+
+.hero-card {
+  max-width: 460px;
+  border-radius: 14px;
+  padding: 24px;
+  background: linear-gradient(135deg, #01d167, #16b870);
+  color: #fff;
+  box-shadow: 0 14px 32px rgb(12 54 90 / 22%);
+}
+
+.brand {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.holder {
+  margin: 32px 0 18px;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.number {
+  margin: 0;
+  letter-spacing: 3px;
+}
+
+.meta {
+  margin: 18px 0 0;
+}
+
+.cards-list {
+  margin: 24px 0 0;
+  max-width: 680px;
+  display: grid;
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e6ea;
+  background: #fff;
+}
+
+.card-row.selected {
+  border-color: #325baf;
+  box-shadow: 0 6px 18px rgb(50 91 175 / 10%);
+}
+
+.card-row.frozen {
+  opacity: 0.45;
+}
+
+.card-info {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
+.card-name {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.card-controls {
+  text-align: right;
+}
+
+.card-controls button {
+  border: 1px solid #325baf;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #325baf;
+  background: #fff;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 30%);
+}
+
+.modal {
+  display: grid;
+  gap: 10px;
+  width: 360px;
+  border-radius: 12px;
+  padding: 18px;
+  background: #fff;
+}
+
+.modal label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.modal input {
+  border: 1px solid #d5d9df;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 20px;
+  }
+}

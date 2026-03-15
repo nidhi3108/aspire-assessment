@@ -44,7 +44,7 @@ describe('createApp', () => {
     const root = document.querySelector<HTMLElement>('#app');
 
     expect(root).not.toBeNull();
-    createApp(root as HTMLElement, storage);
+    createApp(root!, storage);
 
     const list = document.querySelector('[data-testid="cards-list"]');
     expect(list?.querySelectorAll('li')).toHaveLength(PRELOADED_CARDS.length);
@@ -59,32 +59,46 @@ describe('createApp', () => {
     const storage = new StorageMock();
     const root = document.querySelector<HTMLElement>('#app');
 
-    createApp(root as HTMLElement, storage);
+    createApp(root!, storage);
     const addButton = document.querySelector('button');
     addButton?.click();
 
     const modal = document.querySelector<HTMLElement>('[data-testid="add-card-modal"]');
     expect(modal?.hidden).toBe(false);
 
-    const input = document.querySelector<HTMLInputElement>('input[aria-label="holder name"]');
-    const createButton = document.querySelectorAll('button')[1];
-    if (!input) {
-      throw new Error('Expected modal input to exist');
+    const input = modal?.querySelector<HTMLInputElement>('input[aria-label="holder name"]');
+    const createButton = modal?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!input || !createButton) {
+      throw new Error('Expected modal input and create button to exist');
     }
 
     input.value = 'Grace Hopper';
-    createButton?.click();
+    createButton.click();
 
     expect(document.body.textContent).toContain('Grace Hopper');
     expect(document.body.textContent).toContain('1111 1111 1111 1111');
     expect(document.body.textContent).toContain('Exp 02/27');
   });
 
+
+  it('selecting a card updates the active hero card', () => {
+    const storage = new StorageMock();
+    const root = document.querySelector<HTMLElement>('#app');
+
+    createApp(root!, storage);
+
+    const secondCardButton = document.querySelectorAll<HTMLButtonElement>('.card-info')[1];
+    secondCardButton?.click();
+
+    const activeCard = document.querySelector<HTMLElement>('[data-testid="active-card"]');
+    expect(activeCard?.textContent).toContain(PRELOADED_CARDS[1].holderName);
+  });
+
   it('freeze/unfreeze toggles card state and UI label', () => {
     const storage = new StorageMock();
     const root = document.querySelector<HTMLElement>('#app');
 
-    createApp(root as HTMLElement, storage);
+    createApp(root!, storage);
 
     const firstCardId = PRELOADED_CARDS[0].id;
     const toggleButton = document.querySelector<HTMLButtonElement>(
@@ -114,19 +128,21 @@ describe('createApp', () => {
     const storage = new StorageMock();
     let root = document.querySelector<HTMLElement>('#app');
 
-    createApp(root as HTMLElement, storage);
+    createApp(root!, storage);
 
     const addButton = document.querySelector('button');
     addButton?.click();
-    const input = document.querySelector<HTMLInputElement>('input[aria-label="holder name"]');
-    const createButton = document.querySelectorAll('button')[1];
 
-    if (!input) {
-      throw new Error('Expected modal input to exist');
+    const modal = document.querySelector<HTMLElement>('[data-testid="add-card-modal"]');
+    const input = modal?.querySelector<HTMLInputElement>('input[aria-label="holder name"]');
+    const createButton = modal?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    if (!input || !createButton) {
+      throw new Error('Expected modal input and create button to exist');
     }
 
     input.value = 'Persisted User';
-    createButton?.click();
+    createButton.click();
 
     const saved = storage.getItem(storageKey);
     expect(saved).not.toBeNull();
@@ -134,7 +150,7 @@ describe('createApp', () => {
 
     document.body.innerHTML = '<main id="app"></main>';
     root = document.querySelector<HTMLElement>('#app');
-    createApp(root as HTMLElement, storage);
+    createApp(root!, storage);
 
     expect(document.body.textContent).toContain('Persisted User');
   });
