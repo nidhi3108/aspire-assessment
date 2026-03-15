@@ -6,7 +6,9 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; }
-button { font: inherit; }
+button { font: inherit; cursor: pointer; }
+
+/* ─────────── Desktop shell ─────────── */
 
 .app-shell {
   min-height: 100vh;
@@ -35,6 +37,7 @@ button { font: inherit; }
 }
 
 .nav-menu { margin-top: 72px; display: grid; gap: 28px; }
+
 .nav-item {
   border: 0;
   background: none;
@@ -42,6 +45,7 @@ button { font: inherit; }
   text-align: left;
   font-size: 1.05rem;
 }
+
 .nav-item.active { color: #01d167; font-weight: 700; }
 
 .content-layout {
@@ -51,9 +55,13 @@ button { font: inherit; }
   padding: 48px;
 }
 
+/* ─────────── Balance header ─────────── */
+
 .balance-header { display: flex; justify-content: space-between; align-items: center; }
-.balance-header p { margin: 0 0 8px; color: #222; }
+.balance-header p,
+.balance-label { margin: 0 0 8px; color: #222; }
 .balance-row { display: flex; align-items: center; gap: 12px; }
+
 .currency-pill {
   background: #01d167;
   color: #fff;
@@ -61,6 +69,7 @@ button { font: inherit; }
   font-weight: 700;
   padding: 2px 10px;
 }
+
 .balance-row h2 { margin: 0; font-size: 3rem; color: #222; }
 
 .new-card-btn {
@@ -72,9 +81,13 @@ button { font: inherit; }
   font-weight: 700;
 }
 
+/* ─────────── Tabs ─────────── */
+
 .tabs { display: flex; gap: 32px; margin-top: 36px; }
 .tab { border: 0; background: none; padding: 0 0 10px; color: #b2b2b2; font-size: 1.1rem; }
 .tab.active { color: #0c365a; border-bottom: 3px solid #23cefd; font-weight: 700; }
+
+/* ─────────── Desktop card panel ─────────── */
 
 .card-panel {
   background: #fff;
@@ -84,19 +97,24 @@ button { font: inherit; }
   border: 1px solid #eceff3;
 }
 
+/* ─────────── Desktop details panel ─────────── */
+
 .details-panel { display: grid; gap: 14px; align-content: start; }
+
 .panel {
   background: #fff;
   border: 1px solid #eceff3;
   border-radius: 12px;
   padding: 24px;
 }
+
 .panel h3 { margin: 0; font-size: 2rem; color: #0c365a; }
+
 .section-title h3,
-.recent-transactions h3 {
-  font-size: 2rem;
-}
+.recent-transactions h3 { font-size: 2rem; }
+
 .recent-transactions ul { list-style: none; margin: 20px 0 0; padding: 0; }
+
 .recent-transactions li {
   padding: 18px 0;
   border-bottom: 1px solid #eceff3;
@@ -104,60 +122,309 @@ button { font: inherit; }
   justify-content: space-between;
   gap: 8px;
 }
+
 .recent-transactions strong { color: #222; font-size: 1.9rem; display: block; }
 .recent-transactions small { color: #9fa3a8; font-size: 1.5rem; }
 .recent-transactions p { margin: 8px 0 0; color: #325baf; font-weight: 700; font-size: 1.4rem; }
+
 .amount { font-size: 2rem; font-weight: 700; color: #222; }
 .amount.positive { color: #01d167; }
+.no-tx { color: #9fa3a8; margin: 12px 0 0; }
+
+/* ─────────── Mobile bottom nav (hidden on desktop) ─────────── */
 
 .mobile-bottom-nav { display: none; }
 
+/* ─────────── Mobile bottom sheet (hidden on desktop) ─────────── */
+
+.mobile-sheet { display: none; }
+
+
+/* ═══════════════════════════════════════════════
+   MOBILE  (≤ 840 px)
+═══════════════════════════════════════════════ */
+
 @media (max-width: 840px) {
-  .app-shell { display: block; background: #0c365a; }
+  /* ── Shell ── */
+  .app-shell {
+    display: block;
+    background: #0c365a;
+    min-height: 100vh;
+  }
+
   .sidebar { display: none; }
-  .content-layout { display: block; padding: 18px 0 74px; }
-  .card-workspace { padding: 0 16px; }
-  .balance-header p,
-  .balance-row h2 { color: #fff; }
-  .balance-row h2 { font-size: 3rem; }
-  .new-card-btn { background: none; color: #23cefd; padding: 0; font-size: 1.8rem; }
-  .tab { color: rgba(255,255,255,0.55); font-size: 2rem; }
-  .tab.active { color: #fff; }
+
+  .content-layout {
+    display: block;
+    padding: 24px 16px 0;
+  }
+
+  /* hide desktop right panel on mobile */
+  .details-panel { display: none; }
+
+  /* ── Balance header ── */
+  .balance-label,
+  .balance-header p { color: rgba(255, 255, 255, 0.75); font-size: 0.95rem; }
+
+  .balance-row h2 { color: #fff; font-size: 2.4rem; }
+
+  .new-card-btn {
+    background: none;
+    color: #23cefd;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ── Tabs ── */
+  .tabs { margin-top: 24px; gap: 24px; }
+  .tab { color: rgba(255, 255, 255, 0.45); font-size: 0.95rem; padding: 0 0 8px; }
+  .tab.active { color: #fff; border-bottom: 2px solid #23cefd; }
+
+  /* ── Card panel ── */
   .card-panel {
-    margin-top: 0;
+    margin-top: 12px;
     padding: 0;
     border: 0;
     background: transparent;
   }
 
-  .details-panel {
-    margin-top: 26px;
-    background: #f5f6f8;
-    border-radius: 24px 24px 0 0;
-    padding: 18px 16px 100px;
-  }
-  .panel h3,
-  .section-title h3,
-  .recent-transactions h3 { font-size: 2.6rem; }
-  .section-title { order: 1; }
-  .recent-transactions { order: 2; }
-
+  /* ── Bottom nav ── */
   .mobile-bottom-nav {
+    display: grid;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    height: 60px;
     background: #fff;
     border-top: 1px solid #eceff3;
-    display: grid;
     grid-template-columns: repeat(5, 1fr);
-    padding: 12px;
+    z-index: 30;
   }
+
   .mobile-nav-item {
     border: 0;
     background: none;
-    color: #c2c2c2;
-    font-size: 1rem;
+    color: #adb5bd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 0.68rem;
+    padding: 6px 4px;
   }
-  .mobile-nav-item.active { color: #01d167; font-weight: 700; }
+
+  .mobile-nav-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .mobile-nav-item.active { color: #01d167; }
+
+  /* ══════════════════════════════════════
+     Mobile bottom sheet
+  ══════════════════════════════════════ */
+
+  .mobile-sheet {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    background: #f5f6f8;
+    border-radius: 24px 24px 0 0;
+    z-index: 20;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Collapsed: shift down so only ~155px is peeking above the nav */
+    transform: translateY(calc(100% - 155px));
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-sheet--expanded {
+    transform: translateY(0);
+  }
+
+  /* ── Drag handle zone ── */
+  .mobile-sheet-drag {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .mobile-sheet-pill {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: #d0d5dd;
+  }
+
+  /* ── Action buttons row ── */
+  .mobile-actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 6px 12px 16px;
+    background: #edf3ff;
+    border-radius: 16px;
+    margin: 0 12px 16px;
+    gap: 4px;
+  }
+
+  .mobile-action-btn {
+    border: 0;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 2px;
+    touch-action: manipulation;
+  }
+
+  .mobile-action-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #325baf;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .mobile-action-label {
+    font-size: 0.72rem;
+    color: #0c365a;
+    text-align: center;
+    white-space: pre-line;
+    line-height: 1.3;
+  }
+
+  /* ── Accordion panels ── */
+  .sheet-accordion {
+    background: #fff;
+    border: 1px solid #eceff3;
+    border-radius: 12px;
+    margin: 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .sheet-accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    background: none;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .sheet-accordion-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .sheet-accordion-title {
+    flex: 1;
+    font-weight: 600;
+    color: #0c365a;
+    font-size: 0.95rem;
+  }
+
+  .sheet-accordion-chevron {
+    font-size: 1.3rem;
+    color: #9fa3a8;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .sheet-accordion-chevron.open {
+    transform: rotate(180deg);
+  }
+
+  .sheet-accordion-body {
+    padding: 0 16px 16px;
+    border-top: 1px solid #eceff3;
+  }
+
+  .sheet-accordion-body p {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    color: #0c365a;
+  }
+
+  .card-number-display {
+    font-family: monospace;
+    letter-spacing: 2px;
+  }
+
+  /* ── Transaction list inside accordion ── */
+  .sheet-tx-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sheet-tx-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eceff3;
+  }
+
+  .sheet-tx-item:last-child { border-bottom: 0; }
+
+  .sheet-tx-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8f0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .sheet-tx-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sheet-tx-info strong { font-size: 0.9rem; color: #0c365a; }
+  .sheet-tx-info small { font-size: 0.78rem; color: #9fa3a8; }
+
+  .sheet-tx-category {
+    font-size: 0.78rem;
+    color: #325baf;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sheet-tx-amount {
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .no-tx { color: #9fa3a8; font-size: 0.88rem; }
 }

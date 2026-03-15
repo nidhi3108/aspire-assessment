@@ -207,6 +207,14 @@
 }
 
 @media (max-width: 840px) {
+  .show-number-btn {
+    background: #fff;
+    border-radius: 20px;
+    padding: 6px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    font-size: 0.85rem;
+  }
+
   .hero-card {
     padding: 20px 22px 18px;
     min-height: 200px;
@@ -229,8 +237,8 @@
     font-size: 1.3rem;
   }
 
+  /* Actions are in the bottom sheet on mobile */
   .actions-bar {
-    border-radius: 0;
-    margin-top: 16px;
+    display: none;
   }
 }
